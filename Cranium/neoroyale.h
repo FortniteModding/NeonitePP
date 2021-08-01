@@ -75,86 +75,10 @@ namespace NeoRoyale
 		UE4::StaticLoadObjectEasy(BPGClass, XOR(L"/Game/Creative/PostProcess/PP_Spooky.PP_Spooky_C"));
 	}
 
-	inline void InitCombos()
-	{
-		for (auto i = 0x0; i < GObjs->NumElements; ++i)
-		{
-			auto object = GObjs->GetByIndex(i);
-			if (object == nullptr)
-			{
-				continue;
-			}
-
-			if (!Util::IsBadReadPtr(object))
-			{
-				auto objectFullName = object->GetFullName();
-				auto objectFirstName = object->GetName();
-
-				if ((objectFullName.starts_with(L"AthenaGadget") || objectFirstName.starts_with(L"WID_")) && !objectFirstName.starts_with(L"Default__"))
-				{
-					gWeapons.push_back(objectFirstName);
-				}
-				else if (objectFirstName.ends_with(L"_C") && !objectFirstName.starts_with(L"Default__"))
-				{
-					gBlueprints.push_back(objectFirstName);
-				}
-				else if (objectFullName.starts_with(L"SkeletalMesh ") && !objectFirstName.starts_with(L"Default__"))
-				{
-					gMeshes.push_back(objectFirstName);
-				}
-			}
-		}
-	}
-
 	inline void Thread()
 	{
-		//NOTE (kemo): i know this isn't the best practice but it does the job on another thread so it's not a frezzing call
 		while (true)
 		{
-			if (NeoPlayer.Pawn && GetAsyncKeyState(VK_SPACE))
-			{
-				if (!bHasJumped)
-				{
-					bHasJumped = !bHasJumped;
-					if (!NeoPlayer.IsInAircraft())
-					{
-						if (NeoPlayer.IsSkydiving() && !NeoPlayer.IsParachuteOpen() && !NeoPlayer.IsParachuteForcedOpen())
-						{
-							bWantsToOpenGlider = true;
-						}
-
-
-						else if (NeoPlayer.IsSkydiving() && NeoPlayer.IsParachuteOpen() && !NeoPlayer.IsParachuteForcedOpen())
-						{
-							bWantsToSkydive = true;
-						}
-
-
-						else if (!NeoPlayer.IsJumpProvidingForce())
-						{
-							bWantsToJump = true;
-						}
-					}
-				}
-			}
-			else bHasJumped = false;
-
-
-			if (NeoPlayer.Pawn && GetAsyncKeyState(0x31) /* 1 key */)
-			{
-				if (!NeoPlayer.IsInAircraft())
-				{
-					if (!bHasShowedPickaxe)
-					{
-						bHasShowedPickaxe = !bHasShowedPickaxe;
-						NeoPlayer.StopMontageIfEmote();
-						bWantsToShowPickaxe = true;
-					}
-				}
-			}
-			else bHasShowedPickaxe = false;
-
-
 			if (NeoPlayer.Pawn && GetAsyncKeyState(VK_F3))
 			{
 				Stop();
@@ -189,30 +113,14 @@ namespace NeoRoyale
 
 			const auto PlaylistName = gPlaylist->GetName();
 
-			if (!wcsstr(PlaylistName.c_str(), XOR(L"Playlist_Papaya")) &&
-				!wcsstr(PlaylistName.c_str(), XOR(L"Playlist_BattleLab")))
+			if (!wcsstr(PlaylistName.c_str(), XOR(L"Playlist_Papaya")) && !wcsstr(PlaylistName.c_str(), XOR(L"Playlist_BattleLab")))
 			{
 				NeoPlayer.TeleportToSpawn();
 			}
 
-				UFunctions::SetPlaylist();
+			UFunctions::SetPlaylist();
 
-				UFunctions::SetGamePhase();
-
-			if (gVersion == 14.60f)
-			{
-				UFunctions::LoadAndStreamInLevel(GALACTUS_EVENT_MAP);
-			}
-			else if (gVersion == 12.41f)
-			{
-				UFunctions::LoadAndStreamInLevel(JERKY_EVENT_MAP);
-			}
-			else if (gVersion == 12.61f)
-			{
-				UFunctions::LoadAndStreamInLevel(DEVICE_EVENT_MAP);
-			}
-
-			InitCombos();
+			UFunctions::SetGamePhase();
 
 			UFunctions::StartMatch();
 

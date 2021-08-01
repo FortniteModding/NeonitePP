@@ -9,18 +9,6 @@
 
 namespace Hooks
 {
-#ifdef SSL_BYPASS
-
-	inline bool Init()
-	{
-		//<REDACTED>
-
-		
-		return true;
-	}
-
-#endif
-
 	inline bool Misc(float version)
 	{
 		if (MH_Initialize() != MH_OK)
@@ -90,13 +78,10 @@ namespace Hooks
 		SpawnActor = decltype(SpawnActor)(SpawnActorAdd);
 
 
-	
-
 		auto Map = APOLLO_TERRAIN;
 
 		gPlaylist = UE4::FindObject<UObject*>(XOR(L"FortPlaylistAthena /Game/Athena/Playlists/BattleLab/Playlist_BattleLab.Playlist_BattleLab"));
 		Start(Map);
-
 
 
 		return true;

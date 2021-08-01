@@ -100,7 +100,7 @@ public:
 			UpdatePlayerController();
 		}
 
-		auto fn = UE4::FindObject<UFunction*>(XOR(L"Function /Script/Engine.Controller.Possess"));
+		static auto fn = UE4::FindObject<UFunction*>(XOR(L"Function /Script/Engine.Controller.Possess"));
 
 		AController_Possess_Params params;
 		params.InPawn = this->Pawn;
@@ -111,7 +111,7 @@ public:
 
 	auto StartSkydiving(float height)
 	{
-		auto fn = UE4::FindObject<UFunction*>(XOR(L"Function /Script/FortniteGame.FortPlayerPawnAthena.TeleportToSkyDive"));
+		static auto fn = UE4::FindObject<UFunction*>(XOR(L"Function /Script/FortniteGame.FortPlayerPawnAthena.TeleportToSkyDive"));
 
 		AFortPlayerPawnAthena_TeleportToSkyDive_Params params;
 		params.HeightAboveGround = height;
@@ -122,7 +122,7 @@ public:
 
 	auto IsJumpProvidingForce()
 	{
-		auto fn = UE4::FindObject<UFunction*>(XOR(L"Function /Script/Engine.Character.IsJumpProvidingForce"));
+		static auto fn = UE4::FindObject<UFunction*>(XOR(L"Function /Script/Engine.Character.IsJumpProvidingForce"));
 
 		ACharacter_IsJumpProvidingForce_Params params;
 
@@ -161,7 +161,7 @@ public:
 
 	auto IsSkydiving()
 	{
-		auto fn = UE4::FindObject<UFunction*>(XOR(L"Function /Script/FortniteGame.FortPlayerPawn.IsSkydiving"));
+		static auto fn = UE4::FindObject<UFunction*>(XOR(L"Function /Script/FortniteGame.FortPlayerPawn.IsSkydiving"));
 
 		ACharacter_IsSkydiving_Params params;
 
@@ -172,7 +172,7 @@ public:
 
 	auto IsParachuteOpen()
 	{
-		auto fn = UE4::FindObject<UFunction*>(XOR(L"Function /Script/FortniteGame.FortPlayerPawn.IsParachuteOpen"));
+		static auto fn = UE4::FindObject<UFunction*>(XOR(L"Function /Script/FortniteGame.FortPlayerPawn.IsParachuteOpen"));
 
 		ACharacter_IsParachuteOpen_Params params;
 
@@ -183,7 +183,7 @@ public:
 
 	auto IsParachuteForcedOpen()
 	{
-		auto fn = UE4::FindObject<UFunction*>(XOR(L"Function /Script/FortniteGame.FortPlayerPawn.IsParachuteForcedOpen"));
+		static auto fn = UE4::FindObject<UFunction*>(XOR(L"Function /Script/FortniteGame.FortPlayerPawn.IsParachuteForcedOpen"));
 
 		ACharacter_IsParachuteForcedOpen_Params params;
 
@@ -194,7 +194,7 @@ public:
 
 	auto Jump()
 	{
-		auto fn = UE4::FindObject<UFunction*>(XOR(L"Function /Script/Engine.Character.Jump"));
+		static auto fn = UE4::FindObject<UFunction*>(XOR(L"Function /Script/Engine.Character.Jump"));
 
 		Empty_Params params;
 
@@ -208,7 +208,7 @@ public:
 			this->UpdateMesh();
 		}
 
-		auto fn = UE4::FindObject<UFunction*>(XOR(L"Function /Script/Engine.SkinnedMeshComponent.SetSkeletalMesh"));
+		static auto fn = UE4::FindObject<UFunction*>(XOR(L"Function /Script/Engine.SkinnedMeshComponent.SetSkeletalMesh"));
 
 		std::wstring MeshName = meshname;
 
@@ -271,7 +271,7 @@ public:
 #endif
 
 		auto KismetLib = UE4::FindObject<UObject*>(XOR(L"FortKismetLibrary /Script/FortniteGame.Default__FortKismetLibrary"));
-		auto fn = UE4::FindObject<UFunction*>(XOR(L"Function /Script/FortniteGame.FortKismetLibrary.ApplyCharacterCosmetics"));
+		static auto fn = UE4::FindObject<UFunction*>(XOR(L"Function /Script/FortniteGame.FortKismetLibrary.ApplyCharacterCosmetics"));
 
 		UFortKismetLibrary_ApplyCharacterCosmetics_Params params;
 		params.WorldContextObject = WorldFinder.GetObj();
@@ -289,7 +289,7 @@ public:
 		ObjectFinder PlayerStateFinder = PawnFinder.Find(XOR(L"PlayerState"));
 
 		auto KismetLib = UE4::FindObject<UObject*>(XOR(L"FortKismetLibrary /Script/FortniteGame.Default__FortKismetLibrary"));
-		auto fn = UE4::FindObject<UFunction*>(XOR(L"Function /Script/FortniteGame.FortKismetLibrary.UpdatePlayerCustomCharacterPartsVisualization"));
+		static auto fn = UE4::FindObject<UFunction*>(XOR(L"Function /Script/FortniteGame.FortKismetLibrary.UpdatePlayerCustomCharacterPartsVisualization"));
 
 		UFortKismetLibrary_UpdatePlayerCustomCharacterPartsVisualization_Params params;
 		params.PlayerState = PlayerStateFinder.GetObj();
@@ -300,7 +300,7 @@ public:
 
 	auto PickupActor(UObject* PlacementDecoItemDefinition, UObject* PickupTarget = nullptr)
 	{
-		auto fn = UE4::FindObject<UFunction*>(XOR(L"Function /Script/FortniteGame.FortPawn.PickUpActor"));
+		static auto fn = UE4::FindObject<UFunction*>(XOR(L"Function /Script/FortniteGame.FortPawn.PickUpActor"));
 
 		PickupActor_Params params;
 		params.PickupTarget = PickupTarget;
@@ -317,7 +317,7 @@ public:
 		GUID.C = guid;
 		GUID.D = guid;
 
-		auto fn = UE4::FindObject<UFunction*>(XOR(L"Function /Script/FortniteGame.FortPawn.EquipWeaponDefinition"));
+		static auto fn = UE4::FindObject<UFunction*>(XOR(L"Function /Script/FortniteGame.FortPawn.EquipWeaponDefinition"));
 
 		std::wstring WeaponName = weaponname;
 
@@ -406,7 +406,7 @@ public:
 
 	auto GetLocation() -> FVector
 	{
-		auto fn = UE4::FindObject<UFunction*>(XOR(L"Function /Script/Engine.Actor.K2_GetActorLocation"));
+		static auto fn = UE4::FindObject<UFunction*>(XOR(L"Function /Script/Engine.Actor.K2_GetActorLocation"));
 
 		AActor_K2_GetActorLocation_Params params;
 
@@ -421,7 +421,7 @@ public:
 
 		ObjectFinder CharMovementFinder = PawnFinder.Find(XOR(L"CharacterMovement"));
 
-		auto fn = UE4::FindObject<UFunction*>(XOR(L"Function /Script/Engine.CharacterMovementComponent.SetMovementMode"));
+		static auto fn = UE4::FindObject<UFunction*>(XOR(L"Function /Script/Engine.CharacterMovementComponent.SetMovementMode"));
 
 		UCharacterMovementComponent_SetMovementMode_Params params;
 
@@ -456,7 +456,7 @@ public:
 
 	auto SetHealth(float SetHealthInput)
 	{
-		auto fn = UE4::FindObject<UFunction*>(XOR(L"Function /Script/FortniteGame.FortPawn.SetHealth"));
+		static auto fn = UE4::FindObject<UFunction*>(XOR(L"Function /Script/FortniteGame.FortPawn.SetHealth"));
 
 		AFortPawn_SetHealth_Params params;
 
@@ -467,7 +467,7 @@ public:
 
 	auto SetShield(float SetShieldInput)
 	{
-		auto fn = UE4::FindObject<UFunction*>(XOR(L"Function /Script/FortniteGame.FortPawn.SetShield"));
+		static auto fn = UE4::FindObject<UFunction*>(XOR(L"Function /Script/FortniteGame.FortPawn.SetShield"));
 
 		AFortPawn_SetShield_Params params;
 
@@ -478,7 +478,7 @@ public:
 
 	auto SetMaxHealth(float SetMaxHealthInput)
 	{
-		auto fn = UE4::FindObject<UFunction*>(XOR(L"Function /Script/FortniteGame.FortPawn.SetMaxHealth"));
+		static auto fn = UE4::FindObject<UFunction*>(XOR(L"Function /Script/FortniteGame.FortPawn.SetMaxHealth"));
 
 		AFortPawn_SetMaxHealth_Params params;
 
@@ -489,7 +489,7 @@ public:
 
 	auto SetMaxShield(float SetMaxShieldInput)
 	{
-		auto fn = UE4::FindObject<UFunction*>(XOR(L"Function /Script/FortniteGame.FortPawn.SetMaxShield"));
+		static auto fn = UE4::FindObject<UFunction*>(XOR(L"Function /Script/FortniteGame.FortPawn.SetMaxShield"));
 
 		AFortPawn_SetMaxShield_Params params;
 
@@ -500,7 +500,7 @@ public:
 
 	auto SetMovementSpeed(float SetMovementSpeedInput)
 	{
-		auto fn = UE4::FindObject<UFunction*>(XOR(L"Function /Script/FortniteGame.FortPawn.SetMovementSpeed"));
+		static auto fn = UE4::FindObject<UFunction*>(XOR(L"Function /Script/FortniteGame.FortPawn.SetMovementSpeed"));
 
 		AFortPawn_SetMovementSpeedMultiplier_Params params;
 
@@ -567,7 +567,7 @@ public:
 			UpdatePlayerController();
 		}
 
-		auto fn = UE4::FindObject<UFunction*>(XOR(L"Function /Script/FortniteGame.FortPlayerController.IsInAircraft"));
+		static auto fn = UE4::FindObject<UFunction*>(XOR(L"Function /Script/FortniteGame.FortPlayerController.IsInAircraft"));
 		ACharacter_IsInAircraft_Params params;
 
 		ProcessEvent(this->Controller, fn, &params);
