@@ -23,8 +23,7 @@ namespace Hooks
 
 		GObjs = decltype(GObjs)(RELATIVE_ADDRESS(GObjectsAdd, 7));
 
-		auto FNameToStringAdd = Util::FindPattern(Patterns::New::FNameToString,
-		                                          Masks::New::FNameToString);
+		auto FNameToStringAdd = Util::FindPattern(Patterns::New::FNameToString, Masks::New::FNameToString);
 		VALIDATE_ADDRESS(FNameToStringAdd, XOR("Failed to find FNameToString Address."));
 
 		/*const auto offset = *reinterpret_cast<int32_t*>(FNameToStringAdd + 1);
@@ -50,8 +49,7 @@ namespace Hooks
 
 
 		ProcessEvent = decltype(ProcessEvent)(ProcessEventAdd);
-		MH_CreateHook(reinterpret_cast<void*>(ProcessEventAdd), ProcessEventDetour,
-		              reinterpret_cast<void**>(&ProcessEvent));
+		MH_CreateHook(reinterpret_cast<void*>(ProcessEventAdd), ProcessEventDetour, reinterpret_cast<void**>(&ProcessEvent));
 		MH_EnableHook(reinterpret_cast<void*>(ProcessEventAdd));
 
 
@@ -71,8 +69,7 @@ namespace Hooks
 
 
 		//Used to spawn actors
-		auto SpawnActorAdd = Util::FindPattern(Patterns::bGlobal::SpawnActorInternal,
-		                                       Masks::bGlobal::SpawnActorInternal);
+		auto SpawnActorAdd = Util::FindPattern(Patterns::bGlobal::SpawnActorInternal, Masks::bGlobal::SpawnActorInternal);
 		VALIDATE_ADDRESS(SpawnActorAdd, XOR("Failed to find SpawnActor Address."));
 
 		SpawnActor = decltype(SpawnActor)(SpawnActorAdd);

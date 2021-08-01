@@ -50,13 +50,11 @@ public:
 
 	void Authorize()
 	{
-		const auto LocalRole = reinterpret_cast<TEnumAsByte<ENetRole>*>(reinterpret_cast<uintptr_t>(this->Pawn) + ObjectFinder::FindOffset(
-			XOR(L"Class /Script/Engine.Actor"), XOR(L"Role")));
+		const auto LocalRole = reinterpret_cast<TEnumAsByte<ENetRole>*>(reinterpret_cast<uintptr_t>(this->Pawn) + ObjectFinder::FindOffset(XOR(L"Class /Script/Engine.Actor"), XOR(L"Role")));
 
 		*LocalRole = ENetRole::ROLE_Authority;
 
-		const auto RemoteRole = reinterpret_cast<TEnumAsByte<ENetRole>*>(reinterpret_cast<uintptr_t>(this->Pawn) + ObjectFinder::FindOffset(
-			XOR(L"Class /Script/Engine.Actor"), XOR(L"RemoteRole")));
+		const auto RemoteRole = reinterpret_cast<TEnumAsByte<ENetRole>*>(reinterpret_cast<uintptr_t>(this->Pawn) + ObjectFinder::FindOffset(XOR(L"Class /Script/Engine.Actor"), XOR(L"RemoteRole")));
 
 		*RemoteRole = ENetRole::ROLE_Authority;
 	}
@@ -244,8 +242,7 @@ public:
 		 * 3 - Charm (e.g: M_Commando_UR_01_Grenades)
 		 */
 
-		auto CharacterParts = reinterpret_cast<TArray<UObject*>*>(reinterpret_cast<uintptr_t>(Hero) + ObjectFinder::FindOffset(
-			XOR(L"Class /Script/FortniteGame.FortHero"), XOR(L"CharacterParts")));
+		auto CharacterParts = reinterpret_cast<TArray<UObject*>*>(reinterpret_cast<uintptr_t>(Hero) + ObjectFinder::FindOffset(XOR(L"Class /Script/FortniteGame.FortHero"), XOR(L"CharacterParts")));
 
 
 		if (SkinOverride == L"Thanos")
@@ -255,20 +252,19 @@ public:
 		}
 		else if (SkinOverride == L"Chituari")
 		{
-			CharacterParts->operator[](1) = UE4::FindObject<UObject*>(
-				XOR(L"CustomCharacterPart /Game/Characters/CharacterParts/Male/Medium/Heads/CP_Athena_Head_M_AshtonMilo.CP_Athena_Head_M_AshtonMilo"));
+			CharacterParts->operator[](1) = UE4::FindObject<UObject*>(XOR(L"CustomCharacterPart /Game/Characters/CharacterParts/Male/Medium/Heads/CP_Athena_Head_M_AshtonMilo.CP_Athena_Head_M_AshtonMilo"));
 			CharacterParts->operator[](0) = UE4::FindObject<UObject*>(XOR(L"CustomCharacterPart /Game/Athena/Heroes/Meshes/Bodies/CP_Athena_Body_M_AshtonMilo.CP_Athena_Body_M_AshtonMilo"));
 		}
-#ifndef PROD
+		#ifndef PROD
 		else return;
-#else
+		#else
 		else
 		{
 			CharacterParts->operator[](1) =UE4::FindObject<UObject*>(XOR(L"CustomCharacterPart /Game/Athena/Heroes/Meshes/Heads/Dev_TestAsset_Head_M_XL.Dev_TestAsset_Head_M_XL"));
 			CharacterParts->operator[](0) =UE4::FindObject<UObject*>(XOR(L"CustomCharacterPart /Game/Athena/Heroes/Meshes/Bodies/Dev_TestAsset_Body_M_XL.Dev_TestAsset_Body_M_XL"));
 		}
 
-#endif
+		#endif
 
 		auto KismetLib = UE4::FindObject<UObject*>(XOR(L"FortKismetLibrary /Script/FortniteGame.Default__FortKismetLibrary"));
 		static auto fn = UE4::FindObject<UFunction*>(XOR(L"Function /Script/FortniteGame.FortKismetLibrary.ApplyCharacterCosmetics"));
@@ -619,5 +615,117 @@ public:
 
 			printf(XOR("\n[NeoRoyale] Equipped the pickaxe!\n"));
 		}
+	}
+
+	enum class EGameplayEffectGrantedAbilityRemovePolicy : uint8_t
+	{
+		CancelAbilityImmediately, RemoveAbilityOnEnd, DoNothing, EGameplayEffectGrantedAbilityRemovePolicy_MAX,
+	};
+
+	struct UCurveTable : UObject
+	{
+		char UnknownData_28[0x78]; // 0x28(0x78)
+	};
+
+	struct FDataRegistryType
+	{
+		struct FName Name; // 0x00(0x08)
+	};
+
+	struct FCurveTableRowHandle
+	{
+		struct UCurveTable* CurveTable; // 0x00(0x08)
+		struct FName RowName; // 0x08(0x08)
+	};
+
+	struct FScalableFloat
+	{
+		float Value; // 0x00(0x04)
+		char UnknownData_4[0x4]; // 0x04(0x04)
+		struct FCurveTableRowHandle Curve; // 0x08(0x10)
+		struct FDataRegistryType RegistryType; // 0x18(0x08)
+		char UnknownData_20[0x8]; // 0x20(0x08)
+	};
+
+	struct FGameplayAbilitySpecHandle
+	{
+		int32_t Handle; // 0x00(0x04)
+	};
+
+	struct FGameplayAbilitySpecDef
+	{
+		struct UObject* Ability; // 0x00(0x08)
+		struct FScalableFloat LevelScalableFloat; // 0x08(0x28)
+		int32_t InputID; // 0x30(0x04)
+		enum class EGameplayEffectGrantedAbilityRemovePolicy RemovalPolicy; // 0x34(0x01)
+		char UnknownData_35[0x3]; // 0x35(0x03)
+		struct UObject* SourceObject; // 0x38(0x08)
+		char UnknownData_40[0x50]; // 0x40(0x50)
+		struct FGameplayAbilitySpecHandle AssignedHandle; // 0x90(0x04)
+		char UnknownData_94[0x4]; // 0x94(0x04)
+	};
+
+	struct FGameplayEffectContextHandle
+	{
+		char UnknownData_0[0x18]; // 0x00(0x18)
+	};
+
+	enum class EGameplayEffectDurationType : uint8_t
+	{
+		Instant, Infinite, HasDuration, EGameplayEffectDurationType_MAX,
+	};
+
+	struct FActiveGameplayEffectHandle
+	{
+		int32_t Handle; // 0x00(0x04)
+		bool bPassedFiltersAndWasExecuted; // 0x04(0x01)
+		char UnknownData_5[0x3]; // 0x05(0x03)
+	};
+
+	static void BP_ApplyGameplayEffectToSelf(UObject* AbilitySystemComponent, UObject* GameplayEffectClass)
+	{
+		static UObject* BP_ApplyGameplayEffectToSelf = UE4::FindObject<UObject*>(L"Function /Script/GameplayAbilities.AbilitySystemComponent.BP_ApplyGameplayEffectToSelf");
+
+		struct
+		{
+			UObject* GameplayEffectClass;
+			float Level;
+			FGameplayEffectContextHandle EffectContext;
+			FActiveGameplayEffectHandle ret;
+		} Params;
+
+		Params.EffectContext = FGameplayEffectContextHandle();
+		Params.GameplayEffectClass = GameplayEffectClass;
+		Params.Level = 1.0;
+
+		ProcessEvent(AbilitySystemComponent, BP_ApplyGameplayEffectToSelf, &Params);
+	}
+
+	void GrantAbility(UObject* GameplayAbilityClass)
+	{
+		ObjectFinder PawnFinder = ObjectFinder::EntryPoint(uintptr_t(this->Pawn));
+
+		//ObjectFinder AbilitySystemComponentFinder = PawnFinder.Find(XOR(L"AbilitySystemComponent"));
+		auto AbilitySystemComponent = *(UObject**)(__int64(this->Pawn) + 0x0CC8);
+
+		static auto GrantedAbilitiesOffset = ObjectFinder::FindOffset(XOR(L"Class /Script/GameplayAbilities.GameplayEffect"), XOR(L"GrantedAbilities"));
+		static auto DurationPolicyOffset = ObjectFinder::FindOffset(XOR(L"Class /Script/GameplayAbilities.GameplayEffect"), XOR(L"DurationPolicy"));
+
+		//printf("GrantedAbilities: %x\n DurationPolicy: %x\n", GrantedAbilitiesOffset, DurationPolicyOffset);
+		//printf("AbilitySystemComponent: %ls\n", AbilitySystemComponent->GetFullName().c_str());
+
+		static auto DefaultGameplayEffect = UE4::FindObject<UObject*>(L"GE_Athena_PurpleStuff_Health_C /Game/Athena/Items/Consumables/PurpleStuff/GE_Athena_PurpleStuff_Health.Default__GE_Athena_PurpleStuff_Health_C");
+
+		TArray<struct FGameplayAbilitySpecDef>* GrantedAbilities = reinterpret_cast<TArray<struct FGameplayAbilitySpecDef>*>(__int64(DefaultGameplayEffect) + static_cast<__int64>(GrantedAbilitiesOffset));
+
+		GrantedAbilities->operator[](0).Ability = GameplayAbilityClass;
+
+		// give this gameplay effect an infinite duration
+		*reinterpret_cast<EGameplayEffectDurationType*>(__int64(DefaultGameplayEffect) + __int64(DurationPolicyOffset)) = EGameplayEffectDurationType::Infinite;
+
+		// apply modified gameplay effect to ability system component
+		auto GameplayEffectClass = UE4::FindObject<UObject*>(L"BlueprintGeneratedClass /Game/Athena/Items/Consumables/PurpleStuff/GE_Athena_PurpleStuff_Health.GE_Athena_PurpleStuff_Health_C");
+
+		BP_ApplyGameplayEffectToSelf(AbilitySystemComponent, GameplayEffectClass);
 	}
 };
