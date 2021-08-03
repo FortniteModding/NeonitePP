@@ -75,6 +75,14 @@ namespace Hooks
 		SpawnActor = decltype(SpawnActor)(SpawnActorAdd);
 
 
+		auto WeaponCheckAdd = Util::FindPattern("\x0F\x84\x00\x00\x00\x00\x44\x38\x00\x00\x00\x00\x00\x0F\x84\x00\x00\x00\x00\x80\x3D\x75\x44\x2F\x05", "xx????xx?????xx????xxxxxx");
+		VALIDATE_ADDRESS(WeaponCheckAdd, XOR("Failed to find WeaponCheck Address."));
+
+		DWORD oldPrc;
+		VirtualProtect((void*)WeaponCheckAdd, 2, PAGE_EXECUTE_READWRITE, &oldPrc);
+
+		reinterpret_cast<uint8_t*>(WeaponCheckAdd)[1] = 0x85 /* JNE */;
+
 		auto Map = APOLLO_TERRAIN;
 
 		gPlaylist = UE4::FindObject<UObject*>(XOR(L"FortPlaylistAthena /Game/Athena/Playlists/BattleLab/Playlist_BattleLab.Playlist_BattleLab"));

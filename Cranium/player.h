@@ -255,6 +255,24 @@ public:
 			CharacterParts->operator[](1) = UE4::FindObject<UObject*>(XOR(L"CustomCharacterPart /Game/Characters/CharacterParts/Male/Medium/Heads/CP_Athena_Head_M_AshtonMilo.CP_Athena_Head_M_AshtonMilo"));
 			CharacterParts->operator[](0) = UE4::FindObject<UObject*>(XOR(L"CustomCharacterPart /Game/Athena/Heroes/Meshes/Bodies/CP_Athena_Body_M_AshtonMilo.CP_Athena_Body_M_AshtonMilo"));
 		}
+		else if (SkinOverride == L"Test")
+		{
+			
+			const auto BPGClass = UE4::FindObject<UClass*>(XOR(L"Class /Script/FortniteGame.CustomCharacterPart"));
+
+			UE4::StaticLoadObjectEasy(BPGClass, XOR(L"/Game/Characters/CharacterParts/Female/Medium/Heads/CP_Head_F_Buffet.CP_Head_F_Buffet"));
+
+			UE4::StaticLoadObjectEasy(BPGClass, XOR(L"/Game/Athena/Heroes/Meshes/Bodies/CP_Body_Commando_F_Buffet.CP_Body_Commando_F_Buffet"));
+
+			UE4::StaticLoadObjectEasy(BPGClass, XOR(L"/Game/Characters/CharacterParts/FaceAccessories/CP_F_MED_Buffet_FaceAcc.CP_F_MED_Buffet_FaceAcc"));
+
+			CharacterParts->operator[](0) = UE4::FindObject<UObject*>(XOR(L"CustomCharacterPart /Game/Athena/Heroes/Meshes/Bodies/CP_Body_Commando_F_Buffet.CP_Body_Commando_F_Buffet"));
+
+			CharacterParts->operator[](1) = UE4::FindObject<UObject*>(XOR(L"CustomCharacterPart /Game/Characters/CharacterParts/Female/Medium/Heads/CP_Head_F_Buffet.CP_Head_F_Buffet"));
+
+			CharacterParts->operator[](2) = UE4::FindObject<UObject*>(XOR(L"CustomCharacterPart /Game/Characters/CharacterParts/FaceAccessories/CP_F_MED_Buffet_FaceAcc.CP_F_MED_Buffet_FaceAcc"));
+
+		}
 		#ifndef PROD
 		else return;
 		#else

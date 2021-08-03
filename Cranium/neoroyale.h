@@ -107,6 +107,8 @@ namespace NeoRoyale
 
 			NeoPlayer.ToggleInfiniteAmmo();
 
+			//NeoPlayer.SkinOverride = L"Test";
+
 			NeoPlayer.ApplyOverride();
 
 			NeoPlayer.SetMovementSpeed(1.1);
@@ -129,6 +131,11 @@ namespace NeoRoyale
 			CreateThread(nullptr, NULL, reinterpret_cast<LPTHREAD_START_ROUTINE>(&Thread), nullptr, NULL, nullptr);
 
 			UFunctions::ConsoleLog(XOR(L"\n\nWelcome to Neonite++\nMade with ♥ By Kemo (@xkem0x on twitter)."));
+
+			NeoPlayer.EquipWeapon(L"WID_Pistol_SixShooter_Athena_R_Ore_T03");
+
+
+			//UE4::DumpGObjects();
 
 			//ConnectServer();
 

@@ -48,7 +48,9 @@ public:
 
 	int32_t GetOffsetInternal()
 	{
-		return *reinterpret_cast<int32_t*>(this + Offsets::OffsetInternal);
+		auto offset = *reinterpret_cast<int32_t*>(this + Offsets::OffsetInternal);
+		printf(" Offset: %X\n", offset);
+		return offset;
 	}
 };
 
@@ -67,7 +69,7 @@ class ObjectFinder
 
 		auto firstPropertyName = reinterpret_cast<FField*>(inObject)->GetName();
 
-		//printf("\n firstPropertyName: %ls \n", firstPropertyName.c_str());
+		printf("\n firstPropertyName: %ls ", firstPropertyName.c_str());
 
 		if (firstPropertyName == childName)
 		{
@@ -78,7 +80,7 @@ class ObjectFinder
 		{
 			std::wstring nextName = reinterpret_cast<FField*>(next)->GetName();
 
-			//printf("\n nextName: %ls \n", nextName.c_str());
+			printf("\n nextName: %ls ", nextName.c_str());
 
 			if (childName == nextName)
 			{
@@ -96,20 +98,17 @@ class ObjectFinder
 
 	GameObject*& resolveValuePointer(GameObject* bastePtr, GameObject* prop) const
 	{
-		//printf("\nObject: %ls, Offset: %x\n", GetObjectFirstName(reinterpret_cast<UObject*>(m_object)).c_str(), prop->GetOffsetInternal());
+		printf("\nObject: %ls, Offset: %x\n", reinterpret_cast<UObject*>(m_object)->GetFullName().c_str(), prop->GetOffsetInternal());
 		return *reinterpret_cast<GameObject**>(reinterpret_cast<uintptr_t>(m_object) + prop->GetOffsetInternal());
 	}
 
 	GameObject*& resolveArrayValuePointer(GameObject* bastePtr, GameObject* prop) const
 	{
-		return *reinterpret_cast<GameObject**>(*reinterpret_cast<GameObject**>(reinterpret_cast<uintptr_t>(m_object) +
-			prop->GetOffsetInternal()));
+		return *reinterpret_cast<GameObject**>(*reinterpret_cast<GameObject**>(reinterpret_cast<uintptr_t>(m_object) + prop->GetOffsetInternal()));
 	}
 
 public:
-	ObjectFinder(const std::wstring& currentObject, const std::wstring objectType, GameObject* object,
-	             GameObject*& objectRef) :
-		m_currentObject(currentObject), m_objectType(objectType), m_object(object), m_objectRef(objectRef)
+	ObjectFinder(const std::wstring& currentObject, const std::wstring objectType, GameObject* object, GameObject*& objectRef) : m_currentObject(currentObject), m_objectType(objectType), m_object(object), m_objectRef(objectRef)
 	{
 	};
 
@@ -120,10 +119,7 @@ public:
 
 	static ObjectFinder EntryPoint(uintptr_t EntryPointAddress)
 	{
-		return ObjectFinder{
-			L"EntryPoint", L"None", reinterpret_cast<GameObject*>(EntryPointAddress),
-			reinterpret_cast<GameObject*&>(EntryPointAddress)
-		};
+		return ObjectFinder{L"EntryPoint", L"None", reinterpret_cast<GameObject*>(EntryPointAddress), reinterpret_cast<GameObject*&>(EntryPointAddress)};
 	}
 
 	ObjectFinder Find(const std::wstring& objectToFind) const
@@ -137,8 +133,7 @@ public:
 
 		if (Class)
 		{
-			GameObject* property = InternalFindChildInObject(reinterpret_cast<GameObject*>(Class->ChildProperties),
-			                                                 objectToFind);
+			GameObject* property = InternalFindChildInObject(reinterpret_cast<GameObject*>(Class->ChildProperties), objectToFind);
 			if (property)
 			{
 				//printf("[ObjectFinder] Found %ls at 0x%x", objectToFind.c_str(), property->GetOffsetInternal());
@@ -248,11 +243,6 @@ namespace UE4
 		ObjectFinder GameViewPortClientFinder = EngineFinder.Find(XOR(L"GameViewport"));
 		ObjectFinder WorldFinder = GameViewPortClientFinder.Find(XOR(L"World"));
 
-		return SpawnActor(
-			WorldFinder.GetObj(),
-			Class,
-			&Transform,
-			FActorSpawnParameters()
-		);
+		return SpawnActor(WorldFinder.GetObj(), Class, &Transform, FActorSpawnParameters());
 	}
 }

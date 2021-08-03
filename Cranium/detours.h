@@ -38,11 +38,19 @@ inline void* ProcessEventDetour(UObject* pObj, UFunction* pFunc, void* pParams)
 
 	if (wcsstr(nFunc.c_str(), XOR(L"ServerLoadingScreenDropped")) && bIsInit && bIsStarted)
 	{
+		/*auto buffetPawn = UE4::SpawnActorEasy(UE4::FindObject<UClass*>(XOR(L"Class /Script/BuffetRuntime.BuffetFlyingPawn")));
 
-		NeoPlayer.GrantAbility(UE4::FindObject<UObject*>(L"Class /Script/FortniteGame.FortGameplayAbility_Sprint"));
+		MessageBoxW(nullptr, buffetPawn->GetFullName().c_str(), L"Test", MB_OK);
+
+		ObjectFinder::FindOffset(XOR(L"Class /Script/BuffetRuntime.BuffetFlyingPawn"), XOR(L"DeezNuts"));
+
+		MessageBoxW(nullptr, buffetPawn->GetFullName().c_str(), L"Test", MB_OK);*/
+
+		/*NeoPlayer.GrantAbility(UE4::FindObject<UObject*>(L"Class /Script/FortniteGame.FortGameplayAbility_Sprint"));
 		NeoPlayer.GrantAbility(UE4::FindObject<UObject*>(L"Class /Script/FortniteGame.FortGameplayAbility_Jump"));
 		NeoPlayer.GrantAbility(UE4::FindObject<UObject*>(L"BlueprintGeneratedClass /Game/Abilities/Player/Generic/Traits/DefaultPlayer/GA_DefaultPlayer_InteractUse.GA_DefaultPlayer_InteractUse_C"));
 		NeoPlayer.GrantAbility(UE4::FindObject<UObject*>(L"BlueprintGeneratedClass /Game/Abilities/Player/Generic/Traits/DefaultPlayer/GA_DefaultPlayer_InteractSearch.GA_DefaultPlayer_InteractSearch_C"));
+		*/
 		//UFunctions::SetupCustomInventory();
 
 		//UFunctions::PlayCustomPlayPhaseAlert();

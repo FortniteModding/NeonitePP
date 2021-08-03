@@ -111,14 +111,12 @@ namespace UFunctions
 		ObjectFinder WorldFinder = GameViewPortClientFinder.Find(XOR(L"World"));
 		ObjectFinder GameStateFinder = WorldFinder.Find(XOR(L"GameState"));
 
-		bool* bSkipWarmup = reinterpret_cast<bool*>(__int64(gPlaylist) + __int64(0x0790));
-		bool* bSkipAircraft = reinterpret_cast<bool*>(__int64(gPlaylist) + __int64(0x0791));
+		auto CurrentPlaylistInfoOffset = ObjectFinder::FindOffset(XOR(L"Class /Script/FortniteGame.FortGameStateAthena"), XOR(L"CurrentPlaylistInfo"));
 
-		*bSkipWarmup = true;
-		*bSkipAircraft = true;
+		auto CurrentPlaylistInfo = reinterpret_cast<FPlaylistPropertyArray*>(reinterpret_cast<uintptr_t>(GameStateFinder.GetObj()) + CurrentPlaylistInfoOffset);
 
-		UObject** CurrentPlaylist = reinterpret_cast<UObject**>(__int64(GameStateFinder.GetObj()) + __int64(0x1E78) + __int64(0x0120));
-		*CurrentPlaylist = gPlaylist;
+		CurrentPlaylistInfo->BasePlaylist = gPlaylist;
+		CurrentPlaylistInfo->OverridePlaylist = gPlaylist;
 
 		static auto fn = UE4::FindObject<UFunction*>(XOR(L"Function /Script/FortniteGame.FortGameStateAthena.OnRep_CurrentPlaylistInfo"));
 
@@ -276,13 +274,11 @@ namespace UFunctions
 
 		for (auto i = 0; i < 6; i++)
 		{
-			auto MaterialInstanceDynamic = UE4::FindObject<UObject*>(
-				XOR(L"MaterialInstanceDynamic /Game/Athena/Apollo/Maps/Apollo_Terrain.Apollo_Terrain.PersistentLevel.PlayerPawn_Athena_C_"), false, false, i);
+			auto MaterialInstanceDynamic = UE4::FindObject<UObject*>(XOR(L"MaterialInstanceDynamic /Game/Athena/Apollo/Maps/Apollo_Terrain.Apollo_Terrain.PersistentLevel.PlayerPawn_Athena_C_"), false, false, i);
 
 			if (!MaterialInstanceDynamic)
 			{
-				MaterialInstanceDynamic = UE4::FindObject<UObject*>(
-					XOR(L"MaterialInstanceDynamic /Game/Maps/Frontend.Frontend.PersistentLevel.PlayerPawn_Athena_C_"), false, false, i);
+				MaterialInstanceDynamic = UE4::FindObject<UObject*>(XOR(L"MaterialInstanceDynamic /Game/Maps/Frontend.Frontend.PersistentLevel.PlayerPawn_Athena_C_"), false, false, i);
 			}
 
 			if (MaterialInstanceDynamic)
@@ -369,8 +365,7 @@ namespace UFunctions
 	{
 		auto Qos = UE4::FindObject<UObject*>(XOR(L"QosRegionManager /Engine/Transient.QosRegionManager_"));
 
-		auto RegionDefinitions = *reinterpret_cast<TArray<FQosRegionInfo>*>(reinterpret_cast<uintptr_t>(Qos) + ObjectFinder::FindOffset(
-			XOR(L"Class /Script/Qos.QosRegionManager"), XOR(L"RegionDefinitions")));
+		auto RegionDefinitions = *reinterpret_cast<TArray<FQosRegionInfo>*>(reinterpret_cast<uintptr_t>(Qos) + ObjectFinder::FindOffset(XOR(L"Class /Script/Qos.QosRegionManager"), XOR(L"RegionDefinitions")));
 
 		auto RegionId = RegionDefinitions.operator[](0).RegionId.ToString();
 
