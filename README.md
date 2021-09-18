@@ -54,7 +54,7 @@ _This project was made for fun and it doesn't aim to harm the original game by a
 <!-- CONTACT -->
 ##  - Contact
 
-<!-- - Email: <a href="mailto:contact@neonite.dev">contact@neonite.dev</a> -->
+- Email: <a href="mailto:NeoniteDev@protonmail.com">NeoniteDev@protonmail.com</a>
 
 - Discord Server: [Neonite](https://dsc.gg/neonite)
 
