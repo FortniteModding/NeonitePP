@@ -2,13 +2,13 @@
 <br />
 <p align="center">
   <a href="https://github.com/NeoniteDev/NeonitePP">
-    <img src="https://neonite.dev/images/neonite.png" alt="Logo" width="216" height="127">
+    <img src="https://cdn.discordapp.com/attachments/806254601724493844/888826192164159508/neonite.png" alt="Logo" width="216" height="127">
   </a>
 
   <p align="center">
     Fortnite launcher, server and internal mod aimed towards advancing modding within Fortnite.
 	<br />
-	<a href="https://neonite.dev/">ᗒ Official Website ᗕ</a>
+	<!--<a href="https://neonite.dev/">ᗒ Official Website ᗕ</a>-->
   </p>
 
   <p align="center">
@@ -31,7 +31,7 @@ _This project was made for fun and it doesn't aim to harm the original game by a
 
 <!-- BUILDING -->
 ## - Building
-• We do **NOT** provide any building or fixing support and it does **NOT** work on latest, However going back 6~7 commits should be enough to have a version that works on old Chapter 2 clients (s12 ~ s15), Or download a pre-compiled one [here](https://neonite.dev/cdn/NPP.zip). 
+• We do **NOT** provide any building or fixing support and it does **NOT** work on latest, However going back 6~7 commits should be enough to have a version that works on old Chapter 2 clients (s12 ~ s15)
 
 
 <!-- FEATURES -->
@@ -54,7 +54,7 @@ _This project was made for fun and it doesn't aim to harm the original game by a
 <!-- CONTACT -->
 ##  - Contact
 
-- Email: <a href="mailto:contact@neonite.dev">contact@neonite.dev</a>
+- Email: <a href="mailto:NeoniteDev@protonmail.com">NeoniteDev@protonmail.com</a>
 
 - Discord Server: [Neonite](https://dsc.gg/neonite)
 
@@ -79,4 +79,4 @@ This project was made by the modding community **for** the modding community, yo
 
 - All required Boost libs are under [Boost License](https://www.boost.org/users/license.html).
 
-• This project is under [Neo License](https://neonite.dev/LICENSE.html), it was open-sourced to be learned from, not be copy pasted into your application, if any violation of the license or any attempt to impersonate our brand was found we will fill a DMCA Takedown request immediately.
+• This project is under [Neo License](https://github.com/NeoniteDev/NeonitePP/blob/main/LICENSE), it was open-sourced to be learned from, not be copy pasted into your application, if any violation of the license or any attempt to impersonate our brand was found we will fill a DMCA Takedown request immediately.
