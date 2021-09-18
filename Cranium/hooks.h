@@ -56,16 +56,16 @@ namespace Hooks
 		//Used to construct objects, mostly used for console stuff.
 		//Tested from 12.41 to latest
 		auto SCOIAdd = Util::FindPattern(Patterns::bGlobal::SCOI, Masks::bGlobal::SCOI);
-		VALIDATE_ADDRESS(SCOIAdd, XOR("Failed to find SCOI Address."));
+		VALIDATE_ADDRESS(SCOIAdd, XOR("Failed to find SCOI Address. Check Number 1"));
 
 		StaticConstructObject = decltype(StaticConstructObject)(SCOIAdd);
 
 
 		//Used to load objects.
-		auto SLOIAdd = Util::FindPattern(Patterns::bGlobal::SLOI, Masks::bGlobal::SLOI);
-		VALIDATE_ADDRESS(SLOIAdd, XOR("Failed to find SLOI Address."));
+		/*auto SLOIAdd = Util::FindPattern(Patterns::bGlobal::SLOI, Masks::bGlobal::SLOI);
+		VALIDATE_ADDRESS(SLOIAdd, XOR("Failed to find SLOI Address. Check Number 2 "));
 
-		StaticLoadObject = decltype(StaticLoadObject)(SLOIAdd);
+		StaticLoadObject = decltype(StaticLoadObject)(SLOIAdd);*/
 
 
 		//Used to spawn actors
@@ -74,14 +74,14 @@ namespace Hooks
 
 		SpawnActor = decltype(SpawnActor)(SpawnActorAdd);
 
-
+		/*
 		auto WeaponCheckAdd = Util::FindPattern("\x0F\x84\x00\x00\x00\x00\x44\x38\x00\x00\x00\x00\x00\x0F\x84\x00\x00\x00\x00\x80\x3D\x75\x44\x2F\x05", "xx????xx?????xx????xxxxxx");
-		VALIDATE_ADDRESS(WeaponCheckAdd, XOR("Failed to find WeaponCheck Address."));
+		VALIDATE_ADDRESS(WeaponCheckAdd, XOR("Failed to find WeaponCheck Address."));*/
 
-		DWORD oldPrc;
-		VirtualProtect((void*)WeaponCheckAdd, 2, PAGE_EXECUTE_READWRITE, &oldPrc);
+		//DWORD oldPrc;
+		//VirtualProtect((void*)WeaponCheckAdd, 2, PAGE_EXECUTE_READWRITE, &oldPrc);
 
-		reinterpret_cast<uint8_t*>(WeaponCheckAdd)[1] = 0x85 /* JNE */;
+		//reinterpret_cast<uint8_t*>(WeaponCheckAdd)[1] = 0x85 /* JNE */;
 
 		auto Map = APOLLO_TERRAIN;
 
