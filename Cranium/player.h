@@ -57,7 +57,7 @@ public:
 			UObject* ReturnValue;
 		} params;
 		params.CheatClass = CheatClass;
-		params.Outer = GetPlayerController();
+		params.Outer = this->Controller;
 		ProcessEvent(GameplayStatics, SpawnObject, &params);
 
 		CheatManagerFinder.GetObj() = params.ReturnValue;
