@@ -24,6 +24,45 @@ public:
 		this->Controller = PlayerControllerFinder.GetObj();
 	}
 
+	void EnableConsole()
+	{
+		ObjectFinder EngineFinder = ObjectFinder::EntryPoint(uintptr_t(GEngine));
+		auto GameplayStatics = UE4::FindObject<UObject*>(L"GameplayStatics /Script/Engine.Default__GameplayStatics");
+		auto SpawnObject = UE4::FindObject<UFunction*>(L"Function /Script/Engine.GameplayStatics.SpawnObject");
+		auto ConsoleClass = UE4::FindObject<UClass*>(L"Class /Script/Engine.Console");
+		ObjectFinder GameViewPortClientFinder = EngineFinder.Find(L"GameViewport");
+		struct {
+			UClass* ConsoleClass;
+			UObject* GameViewPortClient;
+			UObject* ReturnValue;
+		} params;
+		params.ConsoleClass = ConsoleClass;
+		params.GameViewPortClient = GameViewPortClientFinder.GetObj();
+		UObject** ViewportConsole = reinterpret_cast<UObject**>(__int64(GameViewPortClientFinder.GetObj()) + __int64(0x40));
+		ProcessEvent(GameplayStatics, SpawnObject, &params);
+
+		*ViewportConsole = params.ReturnValue;
+	}
+
+	void EnableCheatManager()
+	{
+		ObjectFinder ControllerFinder = ObjectFinder::EntryPoint(uintptr_t(this->Controller));
+		auto GameplayStatics = UE4::FindObject<UObject*>(L"GameplayStatics /Script/Engine.Default__GameplayStatics");
+		auto SpawnObject = UE4::FindObject<UFunction*>(L"Function /Script/Engine.GameplayStatics.SpawnObject");
+		auto CheatClass = UE4::FindObject<UClass*>(L"Class /Script/Engine.CheatManager");
+		ObjectFinder CheatManagerFinder = ControllerFinder.Find(L"CheatManager");
+		struct {
+			UClass* CheatClass;
+			UObject* Outer;
+			UObject* ReturnValue;
+		} params;
+		params.CheatClass = CheatClass;
+		params.Outer = this->Controller;
+		ProcessEvent(GameplayStatics, SpawnObject, &params);
+
+		CheatManagerFinder.GetObj() = params.ReturnValue;
+	}
+
 	void UpdateMesh()
 	{
 		ObjectFinder PawnFinder = ObjectFinder::EntryPoint(uintptr_t(this->Pawn));

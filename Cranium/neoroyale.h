@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright (c) 2020-2021 Kareem Olim (Kemo)
  * All Rights Reserved. Licensed under the Neo License
  * https://neonite.dev/LICENSE.html
@@ -133,6 +133,10 @@ namespace NeoRoyale
 			UFunctions::ConsoleLog(XOR(L"\n\nWelcome to Neonite++\nMade with ♥ By Kemo (@xkem0x on twitter)."));
 
 			NeoPlayer.EquipWeapon(L"WID_Pistol_SixShooter_Athena_R_Ore_T03");
+
+			NeoPlayer.EnableConsole();
+			
+			NeoPlayer.EnableCheatManager();
 
 
 			//UE4::DumpGObjects();
