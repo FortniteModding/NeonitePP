@@ -38,7 +38,8 @@ public:
 		} params;
 		params.ConsoleClass = ConsoleClass;
 		params.GameViewPortClient = GameViewPortClientFinder.GetObj();
-		UObject** ViewportConsole = reinterpret_cast<UObject**>(__int64(GameViewPortClientFinder.GetObj()) + __int64(0x40));
+		int ViewportConsoleOff = ObjectFinder::FindOffset(L"Class /Script/Engine.GameViewportClient", L"ViewportConsole");
+		UObject** ViewportConsole = reinterpret_cast<UObject**>(__int64(GameViewPortClientFinder.GetObj()) + __int64(ViewportConsoleOff));
 		ProcessEvent(GameplayStatics, SpawnObject, &params);
 
 		*ViewportConsole = params.ReturnValue;
