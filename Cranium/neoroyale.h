@@ -85,6 +85,17 @@ namespace NeoRoyale
 				break;
 			}
 
+			if (NeoPlayer.Pawn && GetAsyncKeyState(VK_SPACE))
+			{
+				if (!bHasJumped)
+				{
+					bHasJumped = !bHasJumped;
+					NeoPlayer.Jump();
+				}
+			}
+			else { bHasJumped = false; }
+			
+
 			Sleep(1000 / 30);
 		}
 	}
